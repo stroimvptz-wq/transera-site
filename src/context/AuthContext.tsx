@@ -1,28 +1,14 @@
-import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
-import type { Session } from '@supabase/supabase-js';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getErrorMessage, type Membership, type Profile } from '@/lib/domain';
 import { fetchProfile } from '@/services/profiles';
 import { fetchMemberships } from '@/services/organizations';
 import { signOut as signOutAccount } from '@/services/auth';
+import { AuthContext, type AuthContextValue } from './AuthContextBase';
+export { AuthContext } from './AuthContextBase';
+export type { AuthContextValue } from './AuthContextBase';
 
 const ACTIVE_ORGANIZATION_KEY = 'transera.activeOrganizationId';
-
-export interface AuthContextValue {
-  session: Session | null;
-  profile: Profile | null;
-  memberships: Membership[];
-  activeMembership: Membership | null;
-  isLoading: boolean;
-  loadError: string | null;
-  isRecovery: boolean;
-  setActiveOrganization: (organizationId: string) => void;
-  refresh: () => Promise<void>;
-  signOut: () => Promise<void>;
-  finishRecovery: () => void;
-}
-
-export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
