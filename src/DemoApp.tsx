@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { Car, Contact, FileText, Route, Users, Wallet } from 'lucide-react';
-import { AuthContext, type AuthContextValue } from '@/context/AuthContext';
+import { AuthContext, type AuthContextValue } from '@/context/AuthContextBase';
 import { AppShell } from '@/components/layout/AppShell';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { ModulePage } from '@/pages/ModulePage';
