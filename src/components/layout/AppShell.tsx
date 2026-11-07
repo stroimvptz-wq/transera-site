@@ -6,7 +6,6 @@ import {
   Contact,
   FileText,
   LayoutDashboard,
-  LogOut,
   Menu,
   Route,
   Settings,
@@ -17,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { useAuth } from '@/hooks/useAuth';
-import { ORG_ROLE_LABELS, type Membership } from '@/lib/domain';
+import { type Membership } from '@/lib/domain';
 import type { Route as AppRoute } from '@/lib/router';
 
 interface NavItem {
@@ -153,7 +152,7 @@ function NavButton({ item, active, onClick }: { item: NavItem; active: boolean; 
   );
 }
 
-function OrganizationSwitcher({ onCreate }: { onCreate: () => void }) {
+function OrganizationSwitcher({ onCreate: _onCreate }: { onCreate: () => void }) {
   const { memberships, activeMembership, setActiveOrganization } = useAuth();
 
   return (
@@ -177,24 +176,15 @@ function OrganizationSwitcher({ onCreate }: { onCreate: () => void }) {
       ) : (
         <div className="rounded-xl border border-navy-700 bg-navy-800/60 px-3 py-2.5">
           <p className="truncate text-sm font-medium text-white">{activeMembership?.organization.name}</p>
-          {activeMembership ? (
-            <p className="text-xs text-navy-300">{ORG_ROLE_LABELS[activeMembership.role]}</p>
-          ) : null}
         </div>
       )}
-      <button
-        type="button"
-        onClick={onCreate}
-        className="w-full rounded-xl px-3 py-2 text-left text-sm text-sky-300 transition hover:bg-navy-800 hover:text-sky-200"
-      >
-        + Добавить организацию
-      </button>
+      
     </div>
   );
 }
 
 function AccountFooter() {
-  const { profile, session, signOut } = useAuth();
+  const { profile, session } = useAuth();
   const displayName = profile?.fullName || session?.user.email || 'Пользователь';
 
   return (
@@ -207,15 +197,7 @@ function AccountFooter() {
           <p className="truncate text-sm font-medium text-white">{displayName}</p>
           <p className="truncate text-xs text-navy-300">{session?.user.email}</p>
         </div>
-        <button
-          type="button"
-          onClick={() => void signOut()}
-          className="rounded-lg p-2 text-navy-300 transition hover:bg-navy-800 hover:text-white"
-          aria-label="Выйти из аккаунта"
-          title="Выйти"
-        >
-          <LogOut className="h-4 w-4" />
-        </button>
+        
       </div>
     </div>
   );
